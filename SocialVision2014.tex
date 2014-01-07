@@ -1,0 +1,105 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage{graphicx}
+%\usepackage{cite}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{wrapfig}
+\usepackage[sort&compress]{natbib}
+\usepackage[bookmarks=false,colorlinks,citecolor=blue,urlcolor=blue]{hyperref}
+
+\include{basic-macros}
+
+\setlength{\textheight}{9in}
+\setlength{\topmargin}{0in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textwidth}{6.5in}
+\setlength{\oddsidemargin}{0in}
+
+\newcommand{\equationsize}{\small}
+\newcommand{\bibliographysize}{\small}
+\newcommand{\captionsize}{\small}
+\newcommand{\captionspace}{\vspace*{-0.2in}}
+\newcommand{\afterfigspace}{\vspace*{-0.2in}}
+
+\newcommand{\Section}[1]{\vspace*{-0.08in}\section{#1}\vspace*{-0.08in}}
+\newcommand{\SubSection}[1]{\vspace*{-0.08in}\subsection{#1}\vspace*{-0.08in}}
+\newcommand{\SubSubSection}[1]{\vspace*{-0.08in}\subsubsection{#1}\vspace*{-0.08in}}
+
+% set spacing in figure caption
+\newcommand{\figurespacing}{\renewcommand{\baselinestretch}{1.0}}
+
+% symbol footnote: use \symbolfootnote[#]{footnote} to invoke with
+%    1 = *; 2 = dagger; 3 = double-dagger; 4--9 = see latex docs
+\long\def\symbolfootnote[#1]#2{\begingroup%
+\def\thefootnote{\fnsymbol{footnote}}\footnote[#1]{#2}\endgroup}
+
+% bold paragraph headers
+\newcommand{\boldstart}[1]{\vspace{0.07in}\noindent{\bf #1}}
+
+\newcommand{\comment}[1]{}
+\newcommand{\todo}[1]{{\textcolor{red}{\bf [#1]}}}
+\newcommand{\todd}[1]{{\color{red}{[\emph{TZ: #1]}}}}
+
+% math shortcuts -- from Todd
+\newcommand{\vx}{{\bf x}}
+\newcommand{\vy}{{\bf y}}
+
+
+% math shortcuts -- from Trevor
+\newcommand{\rep}{{\bf f}}
+\newcommand{\repc}{{f}}
+\newcommand{\repg}{{\bf g}}
+\newcommand{\repgc}{{g}}
+\newfont{\msym}{msbm10}
+\newcommand{\reals}{\mbox{\msym R}}
+\newcommand{\params}{{\bf w}}
+\newcommand{\proj}{{\bf A}}
+\newcommand{\allparams}{{\bf W}}
+\newcommand{\paramsv}{{\bf v}}
+\newcommand{\paramsu}{{\bf u}}
+\newcommand{\auxi}{{\cal T}_i}
+
+% Euclidian space R^{n}. Needs \usepackage{amssymb}
+\newcommand{\Rn}[1]{{\mathbf  R}^{#1}}
+
+\graphicspath{{figs/}}
+
+\def\mytitle{{{\small RI: Small:}\vspace{0.05in}\\ {\Large Social Visual Analytics}}}
+
+\begin{document}
+
+%%% THIS PAGE UPLOADED AS SUPPLEMENTARY DOCUMENTS %%%
+%\pagestyle{empty}
+%\begin{enumerate}
+%\item Todd Zickler; Harvard University; PI
+%\item Todd Zickler; Harvard University; co-PI
+% \end{enumerate}
+
+%%% THIS PAGE UPLOADED AS PROJECT SUMMARY %%%
+\pagebreak
+
+\input{summary}
+
+\pagebreak
+
+\input{introduction}
+\input{relatedwork}
+\input{problem1}
+\input{problem2}
+\input{problem3}
+\input{problem4}
+\input{problem5}
+\input{broaderimpact}
+\input{priorsupport}
+
+\clearpage
+
+\setcounter{page}{1}
+\bibliographystyle{plain} \bibliography{NSF_SocialVision}
+
+
+\end{document}
+
