@@ -21,9 +21,11 @@ We propose to develop foundations for computer vision systems that are `socially
 
 %Our research is timely because of the recent maturation of technologies for detecting and tracking the faces and bodies of individual people and recognizing their identities. A variety of practical systems currently exist for face detection and person detection, and by integrating these with tracking techniques in monocular systems or camera arrays, these can yield crude but useful descriptors of individual behaviors in the form of positions, velocities, histograms-of-flow, bags of space-time interest points, and so on. When resolution and image quality permits, these can also be augmented with more detailed per-individual descriptors computed from head pose, facial expression, and body pose. In any case, with environment-appropriate detection and tracking, along with the extraction of suitable descriptors for the detected and tracked individuals, an image or video can be abstracted as a collection of (fragmented and noisy) individual trajectories with accompanying (time-varying) behavior descriptors (see ${\bf f}$ for still image and ${\bf f}(t)$ for video in Fig.~\ref{fig:intro}). And this is the abstraction on which our proposed methods will operate.
 
-Our research is timely because of the recent maturation of technologies for detecting and tracking the faces and bodies of people and recognizing their identities. A variety of serviceable systems currently exist, and by integrating them one can extract crude but usable descriptors of individual and relative behaviors in the form of positions, trajectories, histograms-of-flow, bags of interest points, and so on. When image quality permits, these can also be augmented with more detailed descriptors computed from head pose and body pose. In any case, with these types of features an image can be abstracted as a noisy collection of positional features, and a video can be abstracted as a noisy collection of space-time features (see Fig.~\ref{fig:intro}). These are the abstractions on which we propose to operate.
+Our research is timely because of maturing technologies for detecting and tracking the faces and bodies of people and recognizing their identities. A variety of serviceable systems exist, and by integrating them one can extract crude but usable descriptors of individual and relative behaviors in the form of positions, trajectories, histograms-of-flow, bags of interest points, and so on. When image quality permits, these can also be augmented with more detailed descriptors computed from head pose and body pose. In any case, with these types of features an image can be abstracted as a noisy collection of positional features, and a video can be abstracted as a noisy collection of space-time features (see Fig.~\ref{fig:intro}). These are the abstractions on which we propose to operate.
 
+\comment{
 At the core of our approach are the ideas that social interactions between two or more people can be broken down into basic spatial and spatio-temporal visual units; that these visual units can be usefully categorized; and that observations of these elemental categories are indicative of interpersonal communications and relationships. These ideas are rooted in the anthropological and sociological studies of non-verbal communication, and they are widely used for qualitative analysis in sociology, education, and many other areas of social science. In this proposal, we borrow (and broaden) the anthropological term \emph{proxeme} to refer to a basic unit of a social interaction, which can be either a relative spatial configuration between multiple people at a particular instance of time (observable in a photograph), and a space-time sequence of such relative configurations (observable in a video).
+}
 
 \comment{related work:
 Study of non-verbal communication. Hall describes a set of four categories of inter-personal distances, and later equates the term `proxeme' with the phoneme of language~\cite{Hall}. Birdwhistell defines `kineme' as the minimal unit of an individual's visual expression (body movement, facial expression, or gesture). Kendon talks about interaction units that are space-time structures of \emph{relative} visual expressions, and introduces categories known as `f-formations' (see Fig.~X). We use the phrase proxeme.
@@ -34,15 +36,6 @@ Study of non-verbal communication. Hall describes a set of four categories of in
 
 later on what features we will use:
 }
-
-
-\begin{figure}[t!]
-\begin{center}
-\includegraphics[width=\columnwidth]{intro_2014}
-\end{center}
-\vspace{-0.25in} \caption{\captionsize 
-Social visual analytics: A computational foundation for recovering information from image and video collections about social relationships and social networks through social proxemes. \label{fig:intro}\afterfigspace}
-\end{figure}
 
 Our project can be described in four parts:
 
@@ -63,12 +56,21 @@ Our project can be described in four parts:
 
 %\vspace{-0.1in}\item \emph{Inferring social networks from visual data.} We will create computational methods for estimating social networks from multiple visual cues, including detected occurrences of social interaction categories. We argue that existing network reconstruction tools are not optimized for visual input, and we propose a new class of techniques to improve performance when: (a) the visual descriptors are derived from diverse sources, are very noisy, and are often missing; (b) the underlying social network contains multiple overlapping communities; and (c) the identities associated with detected and tracked agents are uncertain. 
 
-\vspace{-0.1in}\item \emph{Inferring social networks from proxemes and other visual cues.} We will create computational methods for estimating social networks from multiple visual cues, including repeated occurrences of proxemes. We argue that existing network reconstruction tools are not optimized for visual input, and we propose a new suite of techniques to improve performance when: (a) the visual descriptors are derived from diverse sources, unreliable, and often missing, and therefore the detected proxemes are also noisy; (b) the underlying social network contains multiple overlapping communities; and (c) the identities associated with detected and tracked agents are uncertain. 
+\vspace{-0.1in}\item \emph{Inferring social networks from proxemes and other visual cues.} We will create computational methods for estimating social networks from multiple visual cues, including repeated occurrences of proxemes. Since existing network reconstruction tools are not optimized for visual input, we propose a suite of new techniques to improve performance when: (a) visual descriptors are derived from diverse, unreliable sources and are often missing, so proxeme counts are noisy; (b) the underlying social network contains multiple overlapping communities; and (c) the identities associated with detected and tracked agents are uncertain. 
 
 
 \vspace{-0.1in}\item \emph{Data collection and challenge problems.} We will collect datasets to evaluate our methods and design challenge problems to engage our colleagues in this research agenda. To do this, we will address the challenge of enabling reproducible research while preserving privacy.
 
 \end{enumerate}
+
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[width=\columnwidth]{intro_2014}
+\end{center}
+\vspace{-0.25in} \caption{\captionsize 
+Social visual analytics: A computational foundation for recovering information from image and video collections about social relationships and social networks through social proxemes. \label{fig:intro}\afterfigspace}
+\end{figure}
+
 
 %Our goal is to enable the automatic recovery of useful information about social interactions and the underlying social network using \emph{today's} technology for identity recognition and face and body detection and tracking, with the understanding that our accuracy will automatically increase as face and body analysis tools continue to evolve. A principal challenge we address, therefore is how to handle the substantial and unavoidable uncertainties caused by false detections, broken tracks, and mis-recognitions. We also seek general methods that can exploit inputs of varying precision.  High-quality videos from a meeting can provide fine-scale information about pose and expression, while low-quality surveillance video might provide only coarse estimates of head pose. Our goal is to create general tools that operate in both of these cases and more, automatically making use of as much facial information as is available.
 
