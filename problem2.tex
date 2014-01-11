@@ -1,22 +1,32 @@
 % !TEX root = SocialVision2012.tex
 
-\subsubsection{Detecting and recognizing proxemes}
+\subsubsection{Detecting and recognizing new instances of pre-defined proxemes}
 \label{subsec:activity}
 \vspace{-5pt}
-A key benefit of the proposed representations is that they enable efficient and robust comparisons between interactions, allowing applications from recognition to clustering (i.e., unsupervised learning of proxemes). To demonstrate this, preliminary results of detecting and recognizing pre-defined social proxemes from videos using this simple representation are presented in \cite{groupdet2013} by the PIs.
+A key benefit of the proposed representations is that they enable efficient and robust comparisons between interactions, allowing applications from recognition to clustering (i.e., unsupervised learning of proxemes). To demonstrate this, preliminary results of detecting and recognizing \emph{pre-defined} social proxemes from videos using this simple representation are presented in \cite{groupdet2013} by the PIs.
 
 %We approach detection and recognition as a matching problem, depicted in the left of Fig.~\ref{fig:diagram_dataset}. Suppose we have an exemplar from an interaction category involving $N$ participants, and we wish to localize within a long video of a larger social gathering ($M>N$ tracks) the times and locations in which sub-groups of agents participate in similar interactions. To succeed, we must deal with some of the $M$ tracks being artifacts caused by false detections, and others being fragmented due to tracking breakdowns and agent exits. We must also account for interactions occurring over different temporal extents and at variable rates within their extents.
 
-In this system, detecting and recognizing pre-defined social proxemes is posed as a matching problem, depicted in the left of Fig.~\ref{fig:diagram_dataset}. Suppose we have an exemplar of a proxeme involving $N$ participants, and we wish to localize within a long video of a larger social gathering ($M>N$ tracks) the times and locations in which sub-groups of agents participate in similar interactions. To succeed, we must deal with some of the $M$ tracks being artifacts caused by false detections, and others being fragmented due to tracking breakdowns and agent exits. We must also account for interactions occurring over different temporal extents and at variable rates within their extents.
+\begin{wrapfigure}{r}{0.5\textwidth}
+\vspace{-20pt}
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{groupdet2013}
+  \end{center}
+  \vspace{-20pt}
+  % \caption{Preliminary system for detecting and recognizing social proxemes using the proposed representation.}
+  % \vspace{-15pt}
+%\label{fig:diagram}
+\end{wrapfigure}
+In this system, a collection of exemplars of social proxemes that are pre-defined by domain-experts are given, and detecting and recognizing new instances of these proxemes is posed as a matching problem, depicted on the right\comment{in Fig.~\ref{fig:diagram}}. Suppose we have an exemplar of a proxeme involving $N$ participants, and we wish to localize within a long video of a larger social gathering ($M>N$ tracks) the times and locations in which sub-groups of agents participate in similar interactions. To succeed, we must deal with some of the $M$ tracks being artifacts caused by false detections, and others being fragmented due to tracking breakdowns and agent exits. We must also account for interactions occurring over different temporal extents and at variable rates within their extents.
 
-\begin{figure}[t!]
-\begin{center}
-\includegraphics[width=\columnwidth]{groupdet2013}
-\end{center}
-\vspace{-0.25in} \caption{\captionsize 
-(a): Preliminary system for detecting and recognizing social proxemes using the proposed representation. (b): Examples of the educationally-meaningful proxemes.}
-\label{fig:diagram_dataset}\afterfigspace
-\end{figure}
+%\begin{figure}[t!]
+%\begin{center}
+%\includegraphics[width=\columnwidth]{groupdet2013}
+%\end{center}
+%\vspace{-0.25in} \caption{\captionsize 
+%(a): Preliminary system for detecting and recognizing social proxemes using the proposed representation. (b): Examples of the educationally-meaningful proxemes.}
+%\label{fig:diagram_dataset}\afterfigspace
+%\end{figure}
 
 
 To deal with these various sources of noise and outliers, each frame of the exemplar is separately compared to each frame of the long input video, and for each comparison we find the optimal partial matching between the $N$ exemplar participants and the $M>N$ input tracks. Each frame-wise partial match is represented by an $N\times M$ binary matrix $W$ that has at most one non-zero entry in each row and column. Because our descriptor-ensembles include only unitary and pairwise descriptors, each partial match can be found efficiently using a quadratic program similar to that used in shape matching \cite{Berg05shapematching}
@@ -49,42 +59,54 @@ where $\{\mathbf{f}_{n},\mathbf{g}_{n,n'}\}$ is the collection of $N$ individual
 %\includegraphics[width=2.4in]{ROC_s}
 %\end{wrapfigure}
 
-%We have evaluated this approach using a subset of the Harvard Interactive Classroom Dataset, to be described in Section~\ref{sec:sys}, which is orders of magnitude larger than existing interaction benchmarks~\cite{UTdata,Choi:context,Choi:recogtrack}), in terms of the number of individuals (10-50 students per camera), the number of cameras (6), and the amount of time (more than 50 camera-hours). Through a combination of face detection and tracking, we obtained noisy tracks for all students in each camera and computed simple descriptors based on absolute and pair-wise relative head pose. With input from educational experts we manually identified the participants and start/end times of 112 distinct three-person discussions, and we separated these into four semantically-meaningful categories (e.g., three sitting in a row with two facing left vs. two in front and one behind). The annotated interactions range from a few seconds to tens of seconds in length, and detecting and recognizing them is a challenge because the number of by-standers is much larger than the number of participants ($M$ is between 10 and 20 while $N=3$), video quality is limited (low light, less than 15fps), and the visual cues for interaction are quite subtle. Detection results obtained using a leave-one-session-out evaluation scheme are shown in the ROC curves at right, with various parts of the system being isolated, leaving only individual $\mathbf{f}$ or pairwise $\mathbf{g}$ descriptors, and atomic distance matrices $\Sigma_{I}$, $\Sigma_{P}$ set to identity instead of being data-optimized as will be described in Section~\ref{sec:actlearn}. These results suggest that our preliminary system approach works well, and its performance and flexibility are further supported by tests showing that it provides state-of-the-art detection and recognition results on existing interaction datasets involving both humans~\cite{UTdata} and mice~\cite{CRIM13}, exceeding the accuracy in~\cite{UTdata} by 21\% and exceeding the accuracy in \cite{CRIM13} by 8\%.
+%%We have evaluated this approach using a subset of the Harvard Interactive Classroom Dataset, to be described in Section~\ref{sec:sys}, which is orders of magnitude larger than existing interaction benchmarks~\cite{UTdata,Choi:context,Choi:recogtrack}), in terms of the number of individuals (10-50 students per camera), the number of cameras (6), and the amount of time (more than 50 camera-hours). Through a combination of face detection and tracking, we obtained noisy tracks for all students in each camera and computed simple descriptors based on absolute and pair-wise relative head pose. With input from educational experts we manually identified the participants and start/end times of 112 distinct three-person discussions, and we separated these into four semantically-meaningful categories (e.g., three sitting in a row with two facing left vs. two in front and one behind). The annotated interactions range from a few seconds to tens of seconds in length, and detecting and recognizing them is a challenge because the number of by-standers is much larger than the number of participants ($M$ is between 10 and 20 while $N=3$), video quality is limited (low light, less than 15fps), and the visual cues for interaction are quite subtle. Detection results obtained using a leave-one-session-out evaluation scheme are shown in the ROC curves at right, with various parts of the system being isolated, leaving only individual $\mathbf{f}$ or pairwise $\mathbf{g}$ descriptors, and atomic distance matrices $\Sigma_{I}$, $\Sigma_{P}$ set to identity instead of being data-optimized as will be described in Section~\ref{sec:actlearn}. These results suggest that our preliminary system approach works well, and its performance and flexibility are further supported by tests showing that it provides state-of-the-art detection and recognition results on existing interaction datasets involving both humans~\cite{UTdata} and mice~\cite{CRIM13}, exceeding the accuracy in~\cite{UTdata} by 21\% and exceeding the accuracy in \cite{CRIM13} by 8\%.
 
 
 
-We have evaluated this approach using a subset of the Harvard Interactive Classroom Dataset, to be described in Section~\ref{sec:sys}, which is orders of magnitude larger than existing interaction benchmarks~\cite{UTdata,Choi:context,Choi:recogtrack}), in terms of the number of individuals (10-50 students per camera), the number of cameras (6), and the amount of time (more than 50 camera-hours). Through a combination of face detection and tracking, we obtained noisy tracks for all students in each camera and computed simple descriptors based on absolute and pair-wise relative head pose. With input from educational experts we annotated the participants and start/end times of 254 two-person and 112 three-person salient interactions separated into seven semantically-meaningful proxemes. The annotated interactions range from a few seconds to tens of seconds in length, and detecting and recognizing them is a challenge because the number of by-standers is much larger than the number of participants ($M$ is between 10 and 20 while $N=2,3$), video quality is limited (low light, less than 15fps), and the visual cues for interaction are subtle. Detailed results \cite{groupdet2013} suggest that our preliminary system works well on this data and also achieves state-of-the-art performances on benchmark datasets involving both humans~\cite{UTdata} and animals~\cite{CRIM13}.  
+%We have evaluated this approach using a subset of the Harvard Interactive Classroom Dataset, to be described in Section~\ref{sec:sys}, which is orders of magnitude larger than existing interaction benchmarks~\cite{UTdata,Choi:context,Choi:recogtrack}), in terms of the number of individuals (10-50 students per camera), the number of cameras (6), and the amount of time (more than 50 camera-hours). Through a combination of face detection and tracking, we obtained noisy tracks for all students in each camera and computed simple descriptors based on absolute and pair-wise relative head pose. With input from educational experts we annotated the participants and start/end times of 254 two-person and 112 three-person salient interactions separated into seven semantically-meaningful proxemes. The annotated interactions range from a few seconds to tens of seconds in length, and detecting and recognizing them is a challenge because the number of by-standers is much larger than the number of participants ($M$ is between 10 and 20 while $N=2,3$), video quality is limited (low light, less than 15fps), and the visual cues for interaction are subtle. Detailed results \cite{groupdet2013} suggest that our preliminary system works well on this data and also achieves state-of-the-art performances on benchmark datasets involving both humans~\cite{UTdata} and animals~\cite{CRIM13}.  
+
+We have evaluated this approach using a subset of the Harvard Interactive Classroom Dataset to be described in Section~\ref{sec:sys}. Through a combination of face detection and tracking, we obtained noisy tracks for all agents and computed simple descriptors based on absolute and pair-wise relative head pose. With input from educational experts we annotated the participants and start/end times of 366 salient interactions separated into seven semantically-meaningful (head-pose) proxemes. These interactions range from a few seconds to tens of seconds in length, and the number of by-standers in a video is much larger than the number of participants ($M$ is between 10 and 20 while $N=2,3$). Detailed results \cite{groupdet2013} suggest that our preliminary system works well on this data and also achieves state-of-the-art performances on benchmark datasets involving both humans~\cite{UTdata} and animals~\cite{CRIM13}.  
+
  
 %While these early results are promising, they are only a small indication of what might be achieved. As part of the proposed activity, we will explore more sophisticated descriptor ensembles that allow, for example, larger cliques of relative descriptors and descriptors that are relative to the entire group. We will also explore measures of similarity that, instead of detection and recognition by matching, are well-suited for computing interaction saliency (i.e., interactions that are distinct from their space-time neighborhood) and for semi-supervised and unsupervised learning of categories (e.g., to automatically cluster the salient interactions discovered in a video collection).
 
 
-While these early results are promising, they are only a small indication of what might be achieved. As part of the proposed activity, we will explore more sophisticated descriptor ensembles that allow, for example, \comment{larger cliques of} higher-order relative descriptors and descriptors that are relative to the entire group. We will explore explicit modeling of the temporal structures of the ensemble dynamics, resulting in an representation of "temporal parts" as a counterpart of the spatial parts model for static images \cite{pictorial1973,DPM2013}.We will also explore measures of similarity that, instead of by matching, are well-suited for computing proxeme distinctiveness (i.e., proxemes that are distinct from their space-time neighborhood). 
+While these early results are promising, they are only a small indication of what might be achieved. As part of the proposed activity, we will explore more sophisticated descriptor ensembles that allow, for example, \comment{larger cliques of} higher-order relative descriptors and descriptors that are relative to the entire group. We will explore explicit modeling of the temporal structures of the ensemble dynamics, resulting in an representation of ``temporal parts" as a counterpart of the spatial parts model for static images \cite{pictorial1973,DPM2013}.We will also explore measures of similarity that, instead of by matching, are well-suited for computing proxeme distinctiveness (i.e., proxemes that are distinct from their space-time neighborhood). 
 
 
 %We will also explore spatio-temporal search algorithms that preserve the robustness to false detections and broken tracks brought by voting but are more efficient in time.
 
 
 %\subsubsection{Learning social interaction detectors and categories}
-\subsubsection{Learning socially-informative proxeme categories}
+\subsubsection{Learning new domain-specific proxemes}
 \label{sec:actlearn}
 \vspace{-5pt}
 
-Given a set of pre-defined proxemes, we can detect and recognize instances of these categories using the methods of the previous section. However, to obtain these categories in another specific domain, another group of domain experts and extensive manual annotations are required, and in some domains there may not be experts or knowledge available \emph{a priori}. Meanwhile, commonly studied interactions categories \cite{UTdata} may not be informative: `kicking' and `punching'  are rare in reality, `hand-shaking' does not occur frequently between those with close relations, and `hugging' is too common to distinguish family relationship from professional peers.
+Given a set of pre-defined proxemes, we can detect and recognize instances of these categories using the methods in Section~\ref{subsec:activity}. However, to obtain these categories in another specific domain, another group of domain experts and extensive manual annotations are required, which has been the practice in social science in obtaining proxemes (e.g., those shown in Fig. \ref{fig:socialbehavior} (c)(d)). This requires tremendous amount of manual efforts that can be sometimes prohibitive, and the obtained proxemes do not automatically generalize to other domains. In some domains, there may not be experts or knowledge available \emph{a priori}, and commonly studied interactions categories \cite{UTdata} may not be informative: `kicking' and `punching'  are rare in reality, `hand-shaking' does not occur frequently between those with close relations, and `hugging' is too common to distinguish family relationship from professional peers.
 
 
-\begin{wrapfigure}{r}{0.4\textwidth}
-\vspace{-20pt}
-  \begin{center}
-    \includegraphics[width=0.4\textwidth]{socialdic}
-  \end{center}
-  \vspace{-20pt}
-   \caption{ Socially-informative dictionary of proxemes of pairwise poses. Each column represents a proxeme.}
-   \vspace{-15pt}
-\label{fig:flicker}
-\end{wrapfigure}
-Therefore, our proposed activity includes to develop tools that allow unsupervised or semi-supervised learning of proxemes  that are informative for inferring social relationships, from observed interactions in various imagery collections such as online photo collections, TV show, and movies, as to be introduced in Section~\ref{sec:sys}. In contrast to a standard clustering problem, learning socially-informative proxemes requires to account for two major challenges. First, only a small subset of all observed interactions are useful proxemes, which necessitates the need for clustering ``selected" samples  in ``background clutter". Second, the algorithm must be able to effectively exploit side information, which might comes in the form of textual metadata or relationship information drawn from non-visual sources, once it is available. This side-information can be regarded as interaction signals from another ``domain'', and consequently might be exploited in borrowing from a domain adaptation framework recently developed by the PIs~\cite{LiZickler2012,Li2011}. 
+\begin{figure}[t!]
+\begin{center}
+\includegraphics[width=\columnwidth]{socialdic}
+\end{center}
+\vspace{-0.25in} \caption{\captionsize (a) Dictionary of proxemes of pairwise gesturing unsupervised learned from the Harvard Interactive Classroom Dataset. (b) Socially-informative dictionary of proxemes of pairwise poses unsupervised learned in Flickr photos. Each column represents a proxeme.}
+\label{fig:prodic}\afterfigspace
+\end{figure}
 
-In a preliminary experiment whose details are omitted due to space restriction, we unsupervisedly learned pair-wise pose proxemes from internet photos containing pair of individuals, where only locations of body key points were manually crowd-sourced. Figure~\ref{fig:flicker} shows five discovered proxemes (clusters), each shown in a column with four exemplars. We notice that even without side information, the discovered categories exhibit a statistically significant correlation with social relationships. The first column, where one person holds around the other's waist,  for example, shows a strong dominance of married couples or lovers. Our proposed research activity will include the development of a systematic scheme to discover richer and even more distinctive categories like these in larger scale, and establishing a dictionary of such visual proxemes as the bridge from imagery to social networks.
+%\begin{wrapfigure}{r}{0.4\textwidth}
+%\vspace{-20pt}
+%  \begin{center}
+%    \includegraphics[width=0.4\textwidth]{socialdic}
+%  \end{center}
+%  \vspace{-20pt}
+%   \caption{ Socially-informative dictionary of proxemes of pairwise poses. Each column represents a proxeme.}
+%   \vspace{-15pt}
+%\label{fig:flicker}
+%\end{wrapfigure}
+
+Therefore, our proposed activity includes to develop tools that allow unsupervised or semi-supervised learning of proxemes that are informative for inferring social relationships, from observed interactions in various domains such as online photo collections, TV show, and movies, as to be introduced in Section~\ref{sec:sys}. In contrast to a standard clustering problem, learning socially-informative proxemes requires to account for two major challenges. First, only a small subset of all observed interactions are useful proxemes, which necessitates the need for clustering ``selected" samples  in ``background clutter". Second, the algorithm must be able to effectively exploit side information, which might comes in the form of textual metadata or relationship information drawn from non-visual sources, whenever it is available. This side-information can be regarded as interaction signals from another ``domain'', and consequently might be exploited in borrowing from a domain adaptation framework recently developed by the PIs~\cite{LiZickler2012,Li2011}. 
+
+In a baseline experiment where we jointly perform affinity propagation \cite{frey07affinitypropagation} over interactions represented by the model introduced at the beginning of Section~\ref{sec:proposed-research} and learn metrics $\Sigma_{I}$ and $\Sigma_{P}$, we unsupervisedly discover pair-wise gesturing proxemes in the Harvard Interactive Classroom Dataset using histogram-of-flow based individual and pairwise descriptors. Figure~\ref{fig:prodic} (a) shows four discovered proxemes (clusters), each shown in a column with three exemplars. It can be seen that the experiment successfully discovers four typical interactive gesturing patterns in an classroom environment: The first proxeme corresponds to dominant vigorous gesturing on the left, the second proxeme corresponds to that on the right, the third represents mild gesturing by both, and the fourth depicts handing-over objects near the lower portion of the torsos.  In the same way, we unsupervisedly learn pairwise pose proxemes from internet photos containing two individuals, where locations of body key points are manually crowd-sourced. Figure~\ref{fig:prodic} (b) shows five discovered proxemes. We notice that even without side information, the discovered categories exhibit a statistically significant correlation with social relationships. The first column, where one person holds around the other's waist,  for example, shows a strong dominance of married couples or lovers. Our proposed research activity will include the development of a systematic scheme to discover richer and even more distinctive categories like these in larger scale, and establishing a dictionary of such domain-specific visual proxemes as the bridge from imagery to social networks.
 
 
 
