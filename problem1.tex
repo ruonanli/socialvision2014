@@ -62,7 +62,7 @@ Our tools for social visual analysis will apply to both images and videos, and w
 
 %Consider that in recognizing the two faces detected in Fig. \ref{fig:prob1} (a-1) the right face is hard to distinguish between `Susan' and `Helen' (see (b-1)). However, the inferred `friends' relationship suggests that the individual should belong to the left person's list of friends (see (b-2)), which includes only `Helen' but not `Susan'.
 
-\subsection{Proxemes: Learning, detection, and recognition}
+\subsection{Proxemes and their proximity: The representation space of social interactions}
 \label{sec:activity}
 
 The first part of our research program deals with learning environment-appropriate proxeme dictionaries, and detecting occurrences of proxemes in novel imagery. At the most basic level, this requires inventing two things: 1) a computational representation of interactions; and 2) a recipe for measuring the similarity (or distance) between two interactions. When co-developing these two things, we have four desiderata. First, they must be discriminative, meaning that the similarity between instances of distinct proxemes should be low while that for instances of the same proxeme should be high. Second, they must be insensitive to distractors, such as changes in viewpoint, participant identities, temporal extent, and rates of progression within the interaction. Third, they must be robust and inexpensive, so that we can automatically process large image collections and long videos of large social gatherings. Fourth and finally, they must be flexible, meaning that they should be able to maximally exploit varying levels of image information,  from low-resolution surveillance video to high-fidelity camera networks.

@@ -1,6 +1,6 @@
 % !TEX root = SocialVision2014.tex
 
-\subsubsection{Detecting and recognizing instances of proxemes}
+\subsubsection{Spatio-Temporal Detection and Classification of proxemes}
 \label{subsec:activity}
 \vspace{-5pt}
 
@@ -76,60 +76,6 @@ The representations introduced in this section are useful for detection and reco
 
 %We will also explore spatio-temporal search algorithms that preserve the robustness to false detections and broken tracks brought by voting but are more efficient in time.
 
-
-%\subsubsection{Learning social interaction detectors and categories}
-\subsubsection{Learning environment-specific proxemes}
-\label{sec:actlearn}
-\vspace{-5pt}
-
-Given a set of pre-defined proxemes, we can detect and recognize instances of these categories using the methods of the previous section. But how do we obtain these proxemes in the first place? 
-As discussed in the related work, some of these categories can be manually discovered and defined by social science experts, but experts are not available to exhaustively study every setting.\comment{, we certainly cannot limit ourselves to those.} Instead, we require new unsupervised and semi-supervised methods that can learn socially-informative proxemes from unstructured image and video collections.
-
-There are two major challenges in learning socially-informative proxemes that distinguishes the problem from regular clustering tasks. First, only a tiny subset of space-time regions in video (and a small subset of pixels in an image) will constitute useful proxemes, so the learning algorithm must be able to automatically identify the useful intervals within substantial ``background clutter". Second, the algorithm must be able to effectively exploit side information whenever it is available, including textual metadata and relationship information from non-visual sources. 
-
-%we do not  However, to obtain these categories in another specific domain, another group of domain experts and extensive manual annotations are required, which has been the practice in social science in obtaining proxemes (e.g., those shown in Fig. \ref{fig:socialbehavior} (c)(d)). This requires tremendous amount of manual efforts that can be sometimes prohibitive, and the obtained proxemes do not automatically generalize to other domains. In some domains, there may not be experts or knowledge available \emph{a priori}, and commonly studied interactions categories \cite{UTdata} may not be informative: `kicking' and `punching'  are rare in reality, `hand-shaking' does not occur frequently between those with close relations, and `hugging' is too common to distinguish family relationship from professional peers.
-
-
-\begin{figure}[t!]
-\begin{center}
-\includegraphics[width=\columnwidth]{socialdic}
-\end{center}
-\vspace{-0.25in} \caption{\captionsize (a) Dictionary of proxemes of pairwise gesturing unsupervised learned from the Harvard Interactive Classroom Dataset. (b) Socially-informative dictionary of proxemes of pairwise poses unsupervised learned in Flickr photos. Each column represents a proxeme.}
-\label{fig:prodic}\afterfigspace
-\end{figure}
-
-%\begin{wrapfigure}{r}{0.4\textwidth}
-%\vspace{-20pt}
-%  \begin{center}
-%    \includegraphics[width=0.4\textwidth]{socialdic}
-%  \end{center}
-%  \vspace{-20pt}
-%   \caption{ Socially-informative dictionary of proxemes of pairwise poses. Each column represents a proxeme.}
-%   \vspace{-15pt}
-%\label{fig:flicker}
-%\end{wrapfigure}
-
-During the award period, we will explore a variety of techniques to deal with these challenges. For the second challenge, we will treat side-information as interaction signals from other, non-visual ``domains'', and we will build upon frameworks for domain adaptation that have been recently introduced for recognizing object and single-agent actions by the PIs~\cite{LiZickler2012,Li2011} and others. For the first challenge, we will explore techniques that build upon our preliminary model for interaction similarity (Sec.~\ref{subsec:activity} and \cite{groupdet2013}) to develop techniques that cluster salient samples based on the similarity while simultaneously refining the parameters of the similarity model itself. Figure~\ref{fig:prodic} provides a hint at the potential utility of these research directions. This figure shows the results, on both a video corpus and an image corpus, of a simple baseline system for discovering proxeme categories without side information. In this baseline system, we iterate between: 1) clustering samples by affinity propagation~\cite{frey07affinitypropagation} using the similarity score $S({\cal E},{\cal E}')$ of Sec.~\ref{subsec:activity}; and 2) updating the ``atomic'' metrics $\Sigma_{I}$ and $\Sigma_{P}$ that control that similarity score.
-
-Figure~\ref{fig:prodic}(a) shows representative frames from dynamic proxemes discovered in a subset of the Harvard Interactive Classroom Dataset using individual and pairwise descriptors $\mathbf{f},\mathbf{g}$ based on histograms-of-flow. Each column is a proxeme, and it is visualized using a representative frame from each of three different exemplars of that proxeme. Upon examination, we see the emergence of four  interactive gesturing patterns in a classroom environment: dominant vigorous gesturing on the left or right; mild, simultaneous gesturing by both; and simultaneous engagement with an object. Figure~\ref{fig:prodic}(b) contains results of applying the same process to an unstructured photo collection using individual and pairwise descriptors $\mathbf{f},\mathbf{g}$ derived from crowd-sourced image coordinates of body key-points. Again, each column is a proxeme, and the figure shows four exemplars for each proxeme. Even though these proxemes are discovered without any social side information, we notice substantial correlation between these proxemes and parent-child relationships, romantic partner relationships, and relationships between siblings or friends. 
-
-Inspired by these promising early results, we will systematically explore the learning of environment-specific proxemes on a much larger scale. This includes formalizing the objective functions that are being optimized by iterative techniques like our baseline, and understanding how to incorporate side-information into this process. This research will allow the automatic creation of environment-specific proxeme dictionaries that are analogous to dictionaries of textons~\cite{leung2001representing} or visual words~\cite{grauman2005pyramid,lazebnik2006beyond}, and that serve as a bridge between imagery and social networks.
-
-%Given a set of defined interaction categories, we can detect and recognize instances of these categories using the methods of the previous section. But how do we learn the categories in the first place? How can we make use of labeled samples of interactions? What if few labeled samples are present? In this subsection, we show preliminary results of using category-labeled interaction training samples to maximize the performance of detection and recognition described above, and we describe our plans for exploring semi-supervised and unsupervised learning.
-
-%The detection and recognition system of Section~\ref{subsec:activity} incorporates learnable metrics $\Sigma_I$, $\Sigma_P$ for measuring ``atomic'' distances between descriptors in Eq.~\ref{eq:partial-matching}. These metrics can be optimized to improve detection by better discriminating between interactions and background, and when exemplars are labeled by category, they an be optimized to improve recognition by better discriminating between interaction categories. In our early experiments, we have shown that both of these can be accomplished simultaneously using an adaptation of the Large Margin Nearest Neighbor (LMNN) framework~\cite{Weinberger:ML}, and this is the procedure used to generate the ``w/ Metric Learning'' results in the previous section. It is one simple example of how annotations can be used to learn effective models for interaction categories, thereby allowing a single computational framework for interaction analysis to succeed in a wide variety of environments.
-
-%We do this by constructing two collections from our database exemplars. The collection $\mathcal{P}$ contains all pairs of instantaneous interaction ensembles that are of the same category and occur roughly in the same temporal location within the interaction instances, together with their ``ground-truth" matchings. The collection $\mathcal{M}$, on the other hand, is comprised of ordered triples $(h,k,l)$ in which ensemble $h$ is the same category as ensemble $k$ and ensemble $l$ is either of a different category or background. Having defined these two collections, the Mahalanobis parameters are found by solving
-%\begin{equation}
-%\label{classify}
-%\begin{split}
-%&\min_{\Sigma_{I}, \Sigma_{P}} \sum_{(u,v)\in\mathcal{P}}\hat{D}(\mathcal{D}_{u}, \mathcal{D}_{v}, W_{u,v})+\gamma\sum_{(h,k,l)\in\mathcal{M}}\xi_{h,k,l},\\
-%&\textup{s.t.}  \hat{D}(\mathcal{D}_{h}, \mathcal{D}_{l}, W)-\hat{D}(\mathcal{D}_{h}, \mathcal{D}_{k}, W_{h,k})\ge 2-\xi_{h,k,l}, \Sigma_{I}\succeq 0, \Sigma_{P}\succeq 0, \xi_{h,k,l}\ge0,
-%\end{split}
-%\end{equation}
-%where $W_{u,v}$ is the ``ground-truth" matching for pair $(u,v)$ and $W$ is an arbitrary matching. The minimization over either $\Sigma_{I}$ or $\Sigma_{P}$ is exactly a Large Margin Nearest Neighbor (LMNN) problem \cite{Weinberger:ML}, and we apply LMNN multiple times to separately learn one distinct pair of ($\Sigma_{I}, \Sigma_{P}$) for each value of the number of interaction participants. 
-
-%One of our goals in the proposed activity is to develop tools that allow effective learning of models for interaction categories with many fewer labeled samples. This is motivated by immense manual effort required to obtain these samples. We will explore semi-supervised and unsupervised methods for discovering interaction categories in video collections, based on measures of interaction saliency and between-ensemble similarity measures that incorporate loose space-time structural constraints. We will also explore the use of side information, which might comes in the form of textual metadata or relationship information drawn from non-visual sources. This side-information can be regarded as interaction signals from another ``domain'', and consequently might be exploited in a domain adaptation framework like those recently developed by the PIs~\cite{LiZickler2012,Li2011}. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
