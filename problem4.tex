@@ -1,6 +1,6 @@
 % !TEX root = SocialVision2014.tex
 
-\subsection{Social network reconstruction: multi-dimensional signal processing on graph edges}
+\subsection{Social network reconstruction: multi-dimensional signal processing on edges}
 \label{sec:vis2net}
 \vspace{-5pt}
 
@@ -16,25 +16,29 @@ To address these challenges, we will develop generic frameworks for collaborativ
 \begin{equation}
 \min_{\hat{\mathbf{y}}(k)}\hat{\mathbf{y}}(k)^{T}L_e\hat{\mathbf{y}}(k)+\gamma\sum_{(i,j): \mathbf{y}_{ij}(k)~\textup{exists}}\|y_{ij}(k)-\hat y_{ij}(k)\|^2
 \end{equation}
-where $L_e$ represents the Laplacian operator on the edges. It has been proved the edge Laplacian can be rewritten as 
-\begin{equation}
-L_e=N_{1}N^{*}_{1}+N^{*}_{2}N_{2}
-\end{equation}
-where $N_{1},N_{2}$ and $N^{*}_{1}, N^{*}_{2}$ are called the boundary operators and co-boundary operators \cite{Grady10}. 
+where $L_e$ represents the Laplacian operator on the edges. It has been proved the edge Laplacian can be rewritten as $L_e=N_{1}N^{*}_{1}+N^{*}_{2}N_{2}$ where $N_{1},N_{2}$ and $N^{*}_{1}, N^{*}_{2}$ are called the boundary operators and co-boundary operators \cite{Grady10}. 
 
-Now that the problem has been transformed to a filter design problem – to determine the boundary operators and co-boundary operators. We may further employ the facts that decompositions $N_{1}N^{*}_{1}=PG_{0}P^{T}G^{-1}_{1}$ and $N_{2}N^{*}_{2}=G_{1}Q^{T}G^{-1}_{2}Q$ exist \cite{SpectralChung,Grady10}, where P and Q are the node-edge, edge-face (2-cell) incidence matrices respectively, and consequently further transform the filter design problem to determine the diagonal metric tensors $G_0$, $G_1$ and $G_2$.
+Now that the problem has been transformed to a filter design problem – to determine the boundary operators and co-boundary operators. We may further employ the facts that decompositions $N_{1}N^{*}_{1}=PG_{0}P^{T}G^{-1}_{1}$ and $N_{2}N^{*}_{2}=G_{1}Q^{T}G^{-1}_{2}Q$ exist \cite{SpectralChung,Grady10}, where P and Q are the node-edge, edge-face (2-cell) incidence matrices respectively, and consequently further transform the filter design problem to determine the diagonal metric tensors $G_0$, $G_1$ and $G_2$. As the diagonal element $g_e(i,i)$ encode the ‘weight’’ assigned to the i-th e-cell, one possibility to specifying these weights, is simply to take $G_1=I, G_2=I$, and let $g_0(i,i)$ to be the `weight' on the i-th node as $g_{0}(i,i)=\sum_{j}s(i,j)$ , where $s(i,j)$ are pairwise similarities computed from facial similarities, age/gender attributes, scene types, co-occurrences, and other kinds of visual clues that may imply the social-affinity between two individuals.
 
-As the diagonal element $g_e(i,i)$ encode the ‘weight’’ assigned to the i-th e-cell, one possibility to specifying these weights, is simply to take $G_1=I, G_2=I$, and let $g_0(i,i)$ to be the `weight' on the i-th node as $g_{0}(i,i)=\sum_{j}s(i,j)$ , where $s(i,j)$ are pairwise similarities computed from facial similarities, age/gender attributes, scene types, co-occurrences, and other kinds of visual clues that may imply the social-affinity between two individuals.
-
-In the proposed research, we will explore various other ways in accomplishing this filter ``design" problem, we will also look into different algorithms in performing the optimization, by deriving a corresponding quadratic programming algorithm, or adapting from the backward Euler method \cite{Press:2007}.
+In the proposed research, we will explore other ways in accomplishing this filter design, we will also look into different algorithms in performing the optimization, by deriving a corresponding quadratic programming algorithm, or adapting from the backward Euler method \cite{Press:2007}.
 
 2) With filtered directional relationship probabilities for all individual pairs and all relationship types, we will in the second step design collaborative detection of multiple discrete signals defined on edges across multiple relationship types regularized by structural relationship constraints, as illustrated by Figure~\ref{fig:SP_on_Graph}(d).  To do this, we may harness Poincare duality property for calculus defined on general cell complexes \cite{SpectralChung,Grady10}, and transform each social graph, considered as a 2-complex, into its dual form. In the dual form, each 2-cell (face) in the primal complex, consisting of three individuals, becomes a 0-cell (node) in the dual, and the triple-wise structural constraints among the primal nodes are converted to constraints on this single node in the dual. The duality properties between the two forms also provides ways to compute the topologies of the dual complex in terms of the dual boundary operator and dual co-boundary operator, by which one may further derive the Laplacian for the dual complex.
 
-%This dual transformation establishes a random-field model for the dual complex, for which only unary and binary potentials are involved. As a result, discrete optimization procedures, either based on sampling or using linear programming approximation, may be derived for inferring in the dual complex. 
 
 This dual transformation leads a framework of labeling the dual nodes (i.e., the edge triples in the primal) as one of the triple-wise relationships, each of which is defined by three pairwise relationships. Given a dictionary of all possible triple-wise relationships, labeling a dual node into one of the triple-wise relationships is analogous to encoding it as a \emph{sparse} linear combination of all possible triple-wise relationships in the dictionary,while maintaining consistency between neighboring dual nodes (i.e., primal node triples with overlapping edges). Drawing inspirations from its Euclidean versions, such as sparse coding of image patches while maintaining consistency between overlapping patches \cite{EladPatchDictionary,ZoranSparsepatch}, we will derive novel algorithms for sparse coding for labels of cell complexes, and apply them to the dual nodes of the social graph. With the results from sparse coding, we transform the results back to the primal complex and obtain the final relationship signal on every edge of the social graph.
 
 Based on the findings achieved during the exploration of the 2-step approach, we will continue to look into ways in unifying denoising, edge-completion, and signal detection. The unification will lead to optimization problems that are NP-hard, and we will leverage the expertise of PI Li, who has a history of formulating and solving optimization problems on non-traditional domains. We will also generalize the approach to signals existing on higher-order cells by directly extending the discussions to higher-order Laplacian, filter design, and primal-dual transformations, and this will provide us the foundation to study larger-size community-wise signals. Last but not least, we will explore ways to scale up the model to accommodate massive number of social members, and we expect to explore frameworks in the spirit of a consensus of distributed local optimizers by PI Zickler and others \cite{ChakrabartiXGZ14}.
+
+\subsection{Closing the Loop: Joint Image Processing and Graph Signal Processing}
+\label{sec:closeloop}
+
+A longer term goal of our research is to allow synergistic collaboration between semantic image processing/recognition processes and social signal detection processes. We have argued that semantic image processing provides information about an underlying social network, but the converse is also true. As shown by PI Zickler and others~\cite{Stone2008,Stone2010}, social network information can serve as context to improve image-based recognition. We imagine a future in which these two processes work together. When uncertainty in a face recognition system leads to low confidence in identities, the uncertainty propagates to the extracted social cues y and therefore to the inferred social network graph. However, by reconstructing and denoising the graph as proposed above, we can improve our estimate of the underlying social network, and then carry this information back to the image data, use the the improved social network as context to correct errors and improve recognition models.
+
+
+
+
+%This dual transformation establishes a random-field model for the dual complex, for which only unary and binary potentials are involved. As a result, discrete optimization procedures, either based on sampling or using linear programming approximation, may be derived for inferring in the dual complex. 
+
 
 %\subsubsection{Filtering on the edges: relationship propagation incompletely observed  co-occurrence}
 
@@ -115,9 +119,6 @@ Based on the findings achieved during the exploration of the 2-step approach, we
 % \end{equation}
 %where $X=[\vx_1,\vx_2,\cdots,\vx_K]$, each column of $D$ represents the center of a cluster, and $Z, \hat{Z}$ are a binary matrices by which we assign a node to a cluster among the communities of interest given by $D$. Upon learning the overall model incorporating the essential components in (\ref{eq:embed})(\ref{eq:kmeans}). It is straightforward to reconstruct the noisy and the missing affinities through transforms of Euclidean distances, and to investigate the underlying community structure invariant of views.
 
-\subsection{Closing the Loop: Joint Semantic Image Processing and Social Signal Processing}
-\label{sec:closeloop}
 
-A longer term goal of our research is to allow synergistic collaboration between semantic image processing/recognition processes and social signal detection processes. We have argued that semantic image processing provides information about an underlying social network, but the converse is also true. As shown by PI Zickler and others~\cite{Stone2008,Stone2010}, social network information can serve as context to improve image-based recognition. We imagine a future in which these two processes work together. When uncertainty in a face recognition system leads to low confidence in identities, the uncertainty propagates to the extracted social cues y and therefore to the inferred social network graph. However, by reconstructing and denoising the graph as proposed above, we can improve our estimate of the underlying social network, and then carry this information back to the image data, use the the improved social network as context to correct errors and improve recognition models.
 
 %A longer term goal of our research is to allow synergistic collaboration between visual recognition processes and social reconstructive processes. We have argued that visual recognition provides information about an underlying social network, but the converse is also true. As shown by PI Zickler~\cite{Stone2008,Stone2010} and others, social network information can serve as context to improve recognition. We imagine a future in which these two processes work together. When uncertainty in a face recognition system leads to low confidence in identities, the uncertainty propagates to the extracted social cues $\vy$ and therefore to the inferred social network graph $G$. However, by reconstructing and denoising the multi-view graph as proposed above, we can improve our estimate of the underlying social network, and then carry this information back to the image data, use the the improved social network as context to correct  errors and improve recognition models.
